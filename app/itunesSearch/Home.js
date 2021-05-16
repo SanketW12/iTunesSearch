@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { create } from "apisauce";
-import { Input, Layout, Row, Col, Divider, Button, Typography } from "antd";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { create } from 'apisauce';
+import { Input, Layout, Row, Col, Divider, Button, Typography } from 'antd';
 
-import ReasultCard from "./Card";
+import ReasultCard from './Card';
 
 const { Title } = Typography;
 const { Header, Content } = Layout;
@@ -40,15 +40,15 @@ export default function Home() {
   const [loader, setLoader] = useState(true);
   const [record, setrecord] = useState(true);
 
-  const baseUrl = "https://itunes.apple.com";
+  const baseUrl = 'https://itunes.apple.com';
 
   const api = create({
     baseUrl,
     headers: {
-      "access-control-allow-origin": "*",
-      "Content-type": "application/json; charset=UTF-8",
-      timeout: 10000,
-    },
+      'access-control-allow-origin': '*',
+      'Content-type': 'application/json; charset=UTF-8',
+      timeout: 10000
+    }
   });
 
   function getSearch(event) {
@@ -60,14 +60,10 @@ export default function Home() {
   };
 
   async function onSearch(event) {
-    if (event === "") {
-      alert("Enter something to search");
+    if (event === '') {
+      alert('Enter something to search');
     } else {
-      const temp = await api.get(
-        "https://itunes.apple.com/search",
-        { term: searchTerm, limit: 9 },
-        { headers: {} }
-      );
+      const temp = await api.get('https://itunes.apple.com/search', { term: searchTerm, limit: 9 }, { headers: {} });
       setSongs(temp.data.results);
 
       temp.data.results.length === 0 ? noData() : setLoadmore(true);
@@ -77,11 +73,7 @@ export default function Home() {
   }
 
   const loadMoreFuc = async () => {
-    const temp = await api.get(
-      "https://itunes.apple.com/search",
-      { term: searchTerm, limit: 20 },
-      { headers: {} }
-    );
+    const temp = await api.get('https://itunes.apple.com/search', { term: searchTerm, limit: 20 }, { headers: {} });
     setSongs(temp.data.results);
     setLoadmore(false);
   };
@@ -89,7 +81,7 @@ export default function Home() {
   return (
     <>
       <MainLayout>
-        <Header style={{ backgroundColor: "#20232A" }}>
+        <Header style={{ backgroundColor: '#20232A' }}>
           <Heading>iTunes Search</Heading>
         </Header>
 
@@ -99,7 +91,7 @@ export default function Home() {
               <SearchField
                 placeholder="Search Song or Artist"
                 allowClear
-                enterButton={"Search"}
+                enterButton={'Search'}
                 size="large"
                 onSearch={onSearch}
                 value={searchTerm}
@@ -107,7 +99,7 @@ export default function Home() {
               />
             </Col>
           </Row>
-          <Divider style={{ backgroundColor: "#40444B" }} />
+          <Divider style={{ backgroundColor: '#40444B' }} />
 
           <ResultContainer>
             <Row justify="center" gutter={[16, 40]}>
@@ -116,7 +108,7 @@ export default function Home() {
                   <Title level={4}>NO RESULT FOUND</Title>
                 )
               ) : (
-                songs.map((data) => {
+                songs.map(data => {
                   return (
                     <ReasultCard
                       load={loader}
